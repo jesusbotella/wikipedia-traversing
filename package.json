@@ -1,0 +1,27 @@
+{
+  "name": "wikipedia-traversing",
+  "version": "1.0.0",
+  "description": "Project to find relation within two different wikipedia pages",
+  "main": "index.js",
+  "scripts": {
+    "start": "DEBUG=wikipedia-traversing node index.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jesusbotella/wikipedia-traversing.git"
+  },
+  "author": "Jesús Botella",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jesusbotella/wikipedia-traversing/issues"
+  },
+  "homepage": "https://github.com/jesusbotella/wikipedia-traversing#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "chalk": "^4.0.0",
+    "cheerio": "^1.0.0-rc.3",
+    "debug": "^4.1.1",
+    "graphlib": "^2.1.8"
+  }
+}
