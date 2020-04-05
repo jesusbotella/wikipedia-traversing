@@ -2,17 +2,20 @@ const debug = require('debug')('wikipedia-traversing');
 const { Graph } = require('graphlib');
 const { getLinksFromPage } = require('./src/links');
 
-const initialPage = 'https://es.wikipedia.org/wiki/Juego_de_mesa';
-const targetPage = 'https://es.wikipedia.org/wiki/Adventure_Time';
+const sourcePage = 'https://es.wikipedia.org/wiki/Adventure_Time';
+const targetPage = 'https://es.wikipedia.org/wiki/Ringo_Starr';
+
+debug(`Source: ${sourcePage}`);
+debug(`Target: ${targetPage}`);
 
 const wikipediaTree = new Graph({ compound: true });
 
 debug('Starting');
 
 // Set root node in Tree
-wikipediaTree.setNode(initialPage);
+wikipediaTree.setNode(sourcePage);
 
-const elementsToVisit = [initialPage];
+const elementsToVisit = [sourcePage];
 
 function createTreeNodesFromURLs(urls, parentPage) {
   urls.forEach((url) => {
@@ -27,7 +30,7 @@ function createTreeNodesFromURLs(urls, parentPage) {
   });
 }
 
-async function whileFunction() {
+async function start() {
   while (!wikipediaTree.hasNode(targetPage)) {
     const currentElement = elementsToVisit.shift();
 
@@ -39,16 +42,18 @@ async function whileFunction() {
   }
 
   let currentURL = targetPage;
+  const urlSteps = [currentURL];
 
-  console.log('Hemos recorrido', wikipediaTree.nodes().length, 'páginas');
+  debug(`There are ${wikipediaTree.nodeCount()} nodes within the tree`);
 
-  console.log('Pasos del crawler:');
-  console.log(currentURL);
   while (wikipediaTree.parent(currentURL)) {
     const parentURL = wikipediaTree.parent(currentURL);
-    console.log(parentURL);
+    urlSteps.push(parentURL);
     currentURL = parentURL;
   }
+
+  debug('Steps to follow from origin to target:');
+  urlSteps.reverse().map((urlStep) => debug(`${urlStep}`));
 }
 
-whileFunction();
+start();
